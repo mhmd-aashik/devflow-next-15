@@ -15,8 +15,17 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { MDXEditorMethods } from "@mdxeditor/editor";
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(() => import("@/components/editor"), {
+  // Make sure we turn SSR off
+  ssr: false,
+});
 
 const QuestionForm = () => {
+  const editorRef = React.useRef<MDXEditorMethods>(null);
+
   const form = useForm({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
@@ -39,7 +48,7 @@ const QuestionForm = () => {
           name="title"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
-              <FormLabel className="paragraph-medium text-dark400_light800">
+              <FormLabel className="paragraph-semibold  text-dark400_light800">
                 Question Title <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
@@ -62,11 +71,17 @@ const QuestionForm = () => {
           name="content"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col">
-              <FormLabel className="paragraph-medium text-dark400_light800">
+              <FormLabel className="paragraph-semibold text-dark400_light800">
                 Detail explaination of your problem
                 <span className="text-primary-500">*</span>
               </FormLabel>
-              <FormControl>Editor</FormControl>
+              <FormControl>
+                <Editor
+                  value={field.value}
+                  fieldChange={field.onChange}
+                  editorRef={editorRef}
+                />
+              </FormControl>
               <FormDescription className="body-regular text-light-500 mt-2.5">
                 Introduce the problem and expand on what you're put in the
                 title.
@@ -81,7 +96,7 @@ const QuestionForm = () => {
           name="tags"
           render={({ field }) => (
             <FormItem className="flex w-full flex-col gap-3">
-              <FormLabel className="paragraph-medium text-dark400_light800">
+              <FormLabel className="paragraph-semibold  text-dark400_light800">
                 Tags <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>

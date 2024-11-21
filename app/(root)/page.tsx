@@ -1,4 +1,5 @@
 import { auth, signOut } from "@/auth";
+import HomeFilters from "@/components/filters/HomeFilters";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
@@ -9,10 +10,18 @@ interface SearchParamsProps {
 }
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
-  const { query = "" } = await searchParams;
+  const { query = "", filter = "" } = await searchParams;
 
   const filteredQuestion = questions.filter((question) => {
-    return question.title.toLowerCase().includes(query?.toLowerCase());
+    const matchesQuery = question.title
+      .toLowerCase()
+      .includes(query.toLowerCase());
+
+    const matchesFilter = filter
+      ? question.tags[0].name.toLowerCase() === filter.toLowerCase()
+      : true;
+
+    return matchesQuery && matchesFilter;
   });
   return (
     <>
@@ -34,7 +43,7 @@ const Home = async ({ searchParams }: SearchParamsProps) => {
           otherClasses="flex-1"
         />
       </section>
-      Home Filters
+      <HomeFilters />
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestion.map((question) => (
           <h1 key={question._id}>{question.title}</h1>
@@ -53,7 +62,7 @@ const questions = [
     description: "I want to learn React, can anyone help me?",
     tags: [
       { _id: "1", name: "React" },
-      { _id: "2", name: "JavaScript" },
+      { _id: "2", name: "React" },
     ],
     author: { _id: "1", name: "John Doe" },
     upvotes: 10,
@@ -66,7 +75,7 @@ const questions = [
     title: "How to learn JavaScript?",
     description: "I want to learn JavaScript, can anyone help me?",
     tags: [
-      { _id: "1", name: "React" },
+      { _id: "1", name: "Javascript" },
       { _id: "2", name: "JavaScript" },
     ],
     author: { _id: "1", name: "John Doe" },

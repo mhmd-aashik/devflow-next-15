@@ -25,7 +25,6 @@ const AccountSchema = new Schema<IAccount>(
     },
     password: {
       type: String,
-      required: true,
     },
     provider: {
       type: String,

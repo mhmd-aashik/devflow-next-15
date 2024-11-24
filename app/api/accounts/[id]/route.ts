@@ -47,7 +47,7 @@ export async function DELETE(
   try {
     await dbConnect();
 
-    const account = await User.findByIdAndDelete(id);
+    const account = await Account.findByIdAndDelete(id);
 
     if (!account) throw new NotFoundError("Account");
 

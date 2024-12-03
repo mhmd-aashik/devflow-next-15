@@ -4,6 +4,7 @@ import HomeFilters from "@/components/filters/HomeFilters";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
+import { api } from "@/lib/api";
 import handleError from "@/lib/handlers/error";
 import { NotFoundError, ValidationError } from "@/lib/http-errors";
 import dbConnect from "@/lib/mongoose";
@@ -14,6 +15,9 @@ interface SearchParamsProps {
 }
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
+  const users = await test();
+  console.log(users);
+
   const { query = "", filter = "" } = await searchParams;
 
   const filteredQuestion = questions.filter((question) => {
@@ -99,3 +103,11 @@ const questions = [
     createdAt: new Date("2024-11-01"),
   },
 ];
+
+const test = async () => {
+  try {
+    return await api.users.getAll();
+  } catch (error) {
+    return handleError(error, "api");
+  }
+};

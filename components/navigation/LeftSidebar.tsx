@@ -42,7 +42,7 @@ const LeftSidebar = () => {
             className="invert-colors lg:hidden"
           />
           <Link href={ROUTES.SIGN_UP}>
-            <span className="max-lg:hidden">Log In</span>
+            <span className="max-lg:hidden">Sign Up</span>
           </Link>
         </Button>
       </div>

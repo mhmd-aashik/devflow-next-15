@@ -15,8 +15,8 @@ interface SearchParamsProps {
 }
 
 const Home = async ({ searchParams }: SearchParamsProps) => {
-  const users = await test();
-  console.log(users);
+  const session = await auth();
+  console.log("Session", session);
 
   const { query = "", filter = "" } = await searchParams;
 
@@ -103,11 +103,3 @@ const questions = [
     createdAt: new Date("2024-11-01"),
   },
 ];
-
-const test = async () => {
-  try {
-    return await api.users.getAll();
-  } catch (error) {
-    return handleError(error, "api");
-  }
-};

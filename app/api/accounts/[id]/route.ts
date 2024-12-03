@@ -25,7 +25,7 @@ export async function GET(
 
     return NextResponse.json(
       {
-        status: 200,
+        success: true,
         data: account,
       },
       { status: 200 }
@@ -53,7 +53,7 @@ export async function DELETE(
 
     return NextResponse.json(
       {
-        status: 200,
+        success: true,
         data: account,
       },
       { status: 200 }
@@ -90,7 +90,7 @@ export async function PUT(
 
     return NextResponse.json(
       {
-        status: 200,
+        success: true,
         data: updatedAccount,
       },
       { status: 200 }

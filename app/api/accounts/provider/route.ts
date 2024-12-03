@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 
     const account = await Account.findOne({ providerAccountId });
 
-    if (!account) throw new NotFoundError("User");
+    if (!account) throw new NotFoundError("Account");
 
     return NextResponse.json(
       {
